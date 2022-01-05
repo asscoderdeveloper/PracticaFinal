@@ -11,8 +11,8 @@ public class clasePrincipal {
     private int turnos;
     private String nombreJugador;
     private int puntuacion;
-    private final int NUMEROFICHAS = 11;
-    private final int CANTIDADLETRAS = 26;
+    private static final int NUMEROFICHAS = 11;
+    private static final int CANTIDADLETRAS = 26;
     private char abecedarioCastellano[];
     private int numeroApariciones [];
     private int numeroAparicionesControlar[];
