@@ -9,7 +9,7 @@ package practicafinal;
  *
  * @author alexsanchez
  */
-public class NewClass {
+public class ProgramaPrueba {
     public static void main(String []args)throws Exception{
         clasePrincipal mimi = new clasePrincipal();
         int menu = 0;
