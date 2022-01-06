@@ -12,12 +12,13 @@ package practicafinal;
 public class ProgramaPrueba {
     public static void main(String []args)throws Exception{
         clasePrincipal mimi = new clasePrincipal();
-        int menu = 0;
+        int menu;
         
         menu = mimi.menu();
         if(menu == 1){
-            mimi.menu2();
+            mimi.menuJugar();
         }
+        
         mimi.nombre();
         mimi.numTurnos();
         mimi.generacionArrays();
