@@ -13,17 +13,25 @@ public class clasePrincipal {
     private int puntuacion;
     private static final int NUMEROFICHAS = 11;
     private static final int CANTIDADLETRAS = 26;
-    private char abecedarioCastellano[];
-    private int numeroApariciones [];
+    private static char abecedarioCastellano[];
+    private static int numeroApariciones [];
     private int numeroAparicionesControlar[];
-    private int puntuacionLetras [];
+    private static int puntuacionLetras [];
     private FileReader fichero1;
     private int letraLeida;
     private Random numeroAleatorio;
+    //
+    FichasScrabble fichas = new FichasScrabble();
+
     
    //METODO CONSTRUCTOR
+    public clasePrincipal(){
+        
+    }
    //METODO ENCARGADO DE VISUALIZAR UN MENU
-   public int menu(int dato){
+   public int menu(){
+       int dato;
+       
        System.out.println("\t \tMENU");
        System.out.println("1 --> Jugar una partida"
                + "\n"
@@ -35,7 +43,9 @@ public class clasePrincipal {
        return dato;
    }
    //METODO ENCARGADO DE VISUALIZAR EL SEGUNDO MENU
-      public int menu2(int dato){
+      public int menu2(){
+       int dato;
+       
        System.out.println("\t \tMENU");
        System.out.println("1 --> Jugar una partida solo"
                + "\n"
@@ -44,59 +54,36 @@ public class clasePrincipal {
        dato = LT.readInt();
        return dato;
    }
-   //METODO ENCARAGADO DE SOLICITAR EL NUMERO DE TURNOS QUE DESEA JUGAR
-      public int numTurnos(){
-          System.out.println("Introduce el numero de turnos que deseas jugar: ");
-          turnos = LT.readInt();
-          return turnos;
-      }
+
    //METODO ENCARGADO DE SOLICITAR EL NOMBRE DEL JUGADOR
       public void nombre(){
           System.out.println("Introduce tu nombre: ");
           nombreJugador = LT.readLine();
       }
-   //METODO ENCARGADO LEER EL FICHERO Y OBTENER LAS LETRAS, SUS APARICIONES Y PUNTUACIONES
-      public void lector()throws Exception{
-        fichero1 = new FileReader("ficheroFichas");
-        letraLeida = fichero1.read();
-        while(letraLeida != (int)'\n'){
-            letraLeida = fichero1.read();
-        }
-        letraLeida = fichero1.read();                
-        for(int indice = 0; indice<CANTIDADLETRAS;indice++){
-            abecedarioCastellano[indice] = (char) letraLeida;
-            letraLeida = fichero1.read();   
-            letraLeida = fichero1.read();
-            
-            numeroApariciones[indice] = letraLeida; 
-            letraLeida = fichero1.read();
-            letraLeida = fichero1.read();
-            
-            puntuacionLetras[indice] = letraLeida;
-            letraLeida = fichero1.read();
-            letraLeida = fichero1.read();
-        }
-      }
-    //METODO ENCARGADO SORTEAR LAS LETRAS QUE LE TOCAN AL JUGADOR
-      public char [] sorteadorLetras(){
-          
-          char [] fichas = new char [NUMEROFICHAS];
-          numeroAleatorio = new Random();
-          int indiceAbecedario = 0;
-          numeroAparicionesControlar = numeroApariciones.clone();
-          //
-          for(int indice = 0; indice<NUMEROFICHAS; indice++){
-              indiceAbecedario = numeroAleatorio.nextInt(CANTIDADLETRAS + 1);
-              if(numeroAparicionesControlar[indiceAbecedario] > 0){
-                  numeroAparicionesControlar[indiceAbecedario] =-1;
-                  fichas[indice] = abecedarioCastellano[indiceAbecedario];
-              }
-              else{
-                  indice--;
-              }
-          }
-          return fichas;
+      
+    //METODO ENCARAGADO DE SOLICITAR EL NUMERO DE TURNOS QUE DESEA JUGAR
+        public int numTurnos(){
+          System.out.println("Introduce el numero de turnos que deseas jugar: ");
+          turnos = LT.readInt();
+          return turnos;
+      }      
+        
+    //METODO ENCARGADO DE LA GENERACION DE LOS ARRAYS DICCIONARIO, PUNTUACIONES Y NUMERO DE APARICIONES
+      public void generacionArrays()throws Exception{
+          fichas.lector();
       }
       
-    
+    //METODO ENCARGADO SORTEAR LAS LETRAS QUE LE TOCAN AL JUGADOR
+      public void sorteador(){
+          fichas.sorteadorFichas();
+      }       
+    //
+      public void visualizarCaracteres(){
+          fichas.visualizadorCaracteres(abecedarioCastellano);
+      }
+    //
+      public void visualizarNumeros(){
+          fichas.visualizadorNumeros(puntuacionLetras);
+      }
+      
 }
