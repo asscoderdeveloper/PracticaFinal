@@ -10,15 +10,9 @@ public class FichasScrabble {
     //variable de clase que indica la cantidad de fichas que son repartidas
     private static final int NUMEROFICHAS = 11;
     //variable de clase que indica la cantidad de letras del abecedario
-    private static final int CANTIDADLETRAS = 26;
-    //variable de clase que guarda las fichas dadas como carácteres
-    private static char abecedarioCastellano[] = new char[CANTIDADLETRAS];
-    //variable de clase que guarda la cantidad de fichas dadas con el mismo orden
-    //posicional que los carácteres dados
-    private static int numeroApariciones [] = new int[CANTIDADLETRAS];
-    //variable de clase que guarda la puntuación de cada letra del mismo orden
-    //posicional que los carácteres dados
-    private static int puntuacionLetras [] = new int [CANTIDADLETRAS];
+    private static final int CANTIDAD_FICHAS = 26;
+    //
+    private static Ficha[] fichas = new Ficha[CANTIDAD_FICHAS];
     //variable de clase que establece una conexión de lectura con el fichero
     //que contiene las fichas y sus propiedades
     private static FileReader fichero1;
@@ -35,7 +29,7 @@ public class FichasScrabble {
     //DECLARACIÓN DE LOS ATRIBUTOS DE OBJETO
     //variable de objeto que guarda la cantidad de fichas que se pueden repartir
     //con el mismo orden posicional que los carácteres dados al ser repartidas
-    private int numeroAparicionesControlar[] = new int[CANTIDADLETRAS];
+    private int numeroAparicionesControlar[] = new int[CANTIDAD_FICHAS];
     
     //metodo constructor
     public  FichasScrabble(){
@@ -50,12 +44,14 @@ public class FichasScrabble {
             letraLeida = fichero1.read();
         }
         
-        for(int indice = 0; indice<CANTIDADLETRAS;indice++){            
+        for(int indice = 0; indice<CANTIDAD_FICHAS;indice++){            
             int [] digitos = new int [10];
             int indiceNums;
+            char caracter;
+            int cantidad, valor;
             
             letraLeida = fichero1.read();
-            abecedarioCastellano[indice] = (char) letraLeida;
+            caracter = (char) letraLeida;
             
             buscarSiguiente();
             
@@ -63,7 +59,7 @@ public class FichasScrabble {
                 digitos[indiceNums] = letraLeida - '0';
                 letraLeida = fichero1.read();
             }
-            numeroApariciones[indice] = juntarDigitos(digitos, indiceNums);
+            cantidad = juntarDigitos(digitos, indiceNums);
             
             buscarSiguiente();
             
@@ -71,7 +67,9 @@ public class FichasScrabble {
                 digitos[indiceNums] = letraLeida - '0';
                 letraLeida = fichero1.read();
             }
-            puntuacionLetras[indice] = juntarDigitos(digitos, indiceNums);
+            valor = juntarDigitos(digitos, indiceNums);
+            
+            fichas[indice] = new Ficha(caracter, cantidad, valor);
             
             while(letraLeida != (int)SALTO_DE_LINEA && letraLeida != -1){
                 letraLeida = fichero1.read();
@@ -90,7 +88,7 @@ public class FichasScrabble {
         numeroAparicionesControlar = numeroApariciones.clone();
         //
         for(int indice = 0; indice<NUMEROFICHAS; indice++){
-            indiceAbecedario = numeroAleatorio.nextInt(CANTIDADLETRAS + 1);
+            indiceAbecedario = numeroAleatorio.nextInt(CANTIDAD_FICHAS + 1);
             if(numeroAparicionesControlar[indiceAbecedario] > 0){
                 numeroAparicionesControlar[indiceAbecedario] =-1;
                 fichas[indice] = abecedarioCastellano[indiceAbecedario];
