@@ -11,7 +11,8 @@ public class FichasScrabble {
     private static final int NUMEROFICHAS = 11;
     //variable de clase que indica la cantidad de letras del abecedario
     private static final int CANTIDAD_FICHAS = 26;
-    //
+    //variable de clase que representa las fichas base y sus características
+    //al ser leidas
     private static Ficha[] fichas = new Ficha[CANTIDAD_FICHAS];
     //variable de clase que establece una conexión de lectura con el fichero
     //que contiene las fichas y sus propiedades
@@ -19,8 +20,9 @@ public class FichasScrabble {
     //variable de clase que indica la última letra leída a la hora de leer el
     //fichero de fichas
     private static int letraLeida = ' ';
-    //
-    private Random numeroAleatorio;
+    //variable de clase usado para generar un número aleatorio al repartir las
+    //fichas
+    private static Random numeroAleatorio;
     //variable de clase que indica el carácter del tabulador
     private static final char TABULADOR = '\t';
     //variable de clase que indica el carácter del salto de línea
@@ -36,7 +38,7 @@ public class FichasScrabble {
 
     }
     
-    //METODO ENCARGADO DE LEER EL FICHERO Y OBTENER LAS LETRAS, SUS APARICIONES Y PUNTUACIONES
+    //MÉTODO ENCARGADO DE LEER EL FICHERO Y OBTENER LAS LETRAS, SUS APARICIONES Y PUNTUACIONES
     public static void lector() throws Exception{
         fichero1 = new FileReader("ficheroFichas.txt");
         
@@ -80,24 +82,28 @@ public class FichasScrabble {
     }
     
     //METODO ENCARGADO SORTEAR LAS 11 FICHAS ALEATORIAMENTE
-    public char [] sorteadorFichas(){
+    public Ficha[] sorteadorFichas(){
         //
-        char [] fichas = new char [NUMEROFICHAS];
+        Ficha [] nuevasFichas = new Ficha[NUMEROFICHAS];
         numeroAleatorio = new Random();
         int indiceAbecedario = 0;
-        numeroAparicionesControlar = numeroApariciones.clone();
+        
+        for (int indice = 0; indice < nuevasFichas.length; indice++) {
+            numeroAparicionesControlar[indice] = fichas[indice].getCantidad();
+        }
+
         //
         for(int indice = 0; indice<NUMEROFICHAS; indice++){
             indiceAbecedario = numeroAleatorio.nextInt(CANTIDAD_FICHAS + 1);
             if(numeroAparicionesControlar[indiceAbecedario] > 0){
-                numeroAparicionesControlar[indiceAbecedario] =-1;
-                fichas[indice] = abecedarioCastellano[indiceAbecedario];
+                numeroAparicionesControlar[indiceAbecedario]--;
+                nuevasFichas[indice] = fichas[indiceAbecedario].copiar();
             }
             else{
                 indice--;
             }
         }
-        return fichas;
+        return nuevasFichas;
     }
     //MÉTODO QUE JUNTA UNA CANTIDAD DEFINIDA DE DÍGITOS DE UN ARRAY
     private static int juntarDigitos(int[] digitos, int size){
@@ -122,14 +128,17 @@ public class FichasScrabble {
     }
     //
     public static void visualizadorCaracteres(){
-        for(int indice = 0; indice< abecedarioCastellano.length; indice++){
-            System.out.print(abecedarioCastellano[indice]+",");
+        System.out.println("Carácteres de fichas:");
+        for(int indice = 0; indice< CANTIDAD_FICHAS; indice++){
+            System.out.print(fichas[indice].getCaracter()+",");
         }
+        System.out.println("");
     }
     //
     public static void visualizadorNumeros(){
-        for(int indice = 0; indice< puntuacionLetras.length; indice++){
-            System.out.print(puntuacionLetras[indice]+",");
+        System.out.println("Cantidad de cada ficha:");
+        for(int indice = 0; indice< CANTIDAD_FICHAS; indice++){
+            System.out.print(fichas[indice].getCantidad()+",");
         }
     }
 }
