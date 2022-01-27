@@ -69,7 +69,7 @@ public class clasePrincipal {
         
     //METODO ENCARGADO DE LA GENERACION DE LOS ARRAYS ABECEDARIO, PUNTUACIONES Y NUMERO DE APARICIONES
     public void generacionArrays()throws Exception{
-        FichasScrabble.lector();
+        FichasScrabble.lectorFichas();
     }
       
     //METODO ENCARGADO DE SORTEAR LAS LETRAS QUE LE TOCAN AL JUGADOR
